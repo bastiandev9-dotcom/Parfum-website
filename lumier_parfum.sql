@@ -364,18 +364,18 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `nama_produk`, `slug`, `brand_id`, `category_id`, `harga`, `harga_diskon`, `deskripsi`, `aroma`, `gender`, `stok`, `stok_minimum`, `gambar_utama`, `rating_avg`, `total_review`, `total_terjual`, `status`, `is_best_seller`, `is_new_arrival`, `created_at`, `updated_at`) VALUES
-(1, 'Carolina Herrera', 'carolina-herrera', 8, 2, 1250000, NULL, '-', 'floral', 'wanita', 25, 5, 'assets/images/products/carolina.png', 0.0, 0, 1, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:15:53'),
-(2, 'Icon Elixir Woman EDP', 'etienne-aigner', 7, 1, 980000, 850000, '-.', 'floral', 'wanita', 12, 5, 'assets/images/products/icon-elixir-woman-edp-100-ml-removebg-preview.png', 5.0, 1, 3, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:14:31'),
-(3, 'Pinnace Oryn Man', 'Pinnace Oryn Man', 9, 1, 850000, NULL, '-', 'citrus', 'pria', 30, 5, 'assets/images/products/pinnace-removebg-preview.png', 0.0, 0, 2, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-06-04 03:43:58'),
-(4, 'Bad Boy Elixir Man', 'Bad Boy Elixir Man', 8, 1, 1450000, NULL, '-', 'woody', 'pria', 18, 5, 'assets/images/products/badboy-removebg-preview.png', 0.0, 0, 1, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-06-04 03:58:01'),
-(5, 'Versace Eros Pour Femme', 'Versace-Eros-Pour-Femme', 4, 1, 750000, 650000, '-', 'floral', 'wanita', 20, 5, 'assets/images/products/versace-eros-removebg-preview.png', 5.0, 1, 1, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:16:46'),
-(6, 'Le Beau Paradise Garden Man', 'Le-Beau-Paradise-Garden-Man', 10, 1, 1100000, NULL, '-', 'woody', 'pria', 15, 5, 'assets/images/products/jeanpg-removebg-preview.png', 0.0, 0, 0, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:18:55'),
-(7, 'La Belle Paradise Garden Woman', 'La Belle Paradise Garden Woman', 10, 1, 1350000, NULL, '-', 'floral', 'pria', 22, 5, 'assets/images/products/labelle-removebg-preview.png', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:20:08'),
-(8, 'Le Beau Man', 'Le Beau Man', 10, 1, 620000, NULL, '-', 'woody', 'pria', 28, 5, 'assets/images/products/lebeauman-removebg-preview.png', 0.0, 0, 0, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-05-23 14:21:27'),
-(9, 'Aqua Di Gio', 'aqua-di-gio', 5, 1, 1050000, 920000, '-', 'woody', 'pria', 19, 5, 'assets/images/products/aqua-removebg-preview.png', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:22:12'),
-(10, 'Vanilla Orchid', 'vanilla-orchid', 6, 3, 1800000, NULL, 'Vanilla Madagascar dipadukan anggrek eksotis. Manis, sensual, dan mewah.', 'oriental', 'wanita', 10, 5, 'assets/images/products/vanilla-removebg-preview.png', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:22:46'),
-(11, 'Christian Dior Sauvage Elixir Man', 'Christian Dior Sauvage Elixir Man', 3, 2, 890000, NULL, '-', 'woody', 'pria', 14, 5, 'assets/images/products/sauvage-removebg-preview.png', 0.0, 0, 0, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:23:17'),
-(12, 'Calvin Klein CK One Essence', 'Calvin Klein CK One Essence', 11, 1, 550000, 480000, '-', 'fresh', 'unisex', 35, 5, 'assets/images/products/one_essence-removebg-preview.png', 0.0, 0, 0, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-05-23 14:23:53');
+(1, 'Carolina Herrera', 'carolina-herrera', 8, 2, 1250000, NULL, '-', 'floral', 'wanita', 25, 5, 'assets/images/products/carolina.webp', 0.0, 0, 1, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:15:53'),
+(2, 'Icon Elixir Woman EDP', 'etienne-aigner', 7, 1, 980000, 850000, '-.', 'floral', 'wanita', 12, 5, 'assets/images/products/icon-elixir-woman-edp-100-ml-removebg-preview.webp', 5.0, 1, 3, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:14:31'),
+(3, 'Pinnace Oryn Man', 'Pinnace Oryn Man', 9, 1, 850000, NULL, '-', 'citrus', 'pria', 30, 5, 'assets/images/products/pinnace-removebg-preview.webp', 0.0, 0, 2, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-06-04 03:43:58'),
+(4, 'Bad Boy Elixir Man', 'Bad Boy Elixir Man', 8, 1, 1450000, NULL, '-', 'woody', 'pria', 18, 5, 'assets/images/products/badboy-removebg-preview.webp', 0.0, 0, 1, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-06-04 03:58:01'),
+(5, 'Versace Eros Pour Femme', 'Versace-Eros-Pour-Femme', 4, 1, 750000, 650000, '-', 'floral', 'wanita', 20, 5, 'assets/images/products/versace-eros-removebg-preview.webp', 5.0, 1, 1, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:16:46'),
+(6, 'Le Beau Paradise Garden Man', 'Le-Beau-Paradise-Garden-Man', 10, 1, 1100000, NULL, '-', 'woody', 'pria', 15, 5, 'assets/images/products/jeanpg-removebg-preview.webp', 0.0, 0, 0, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:18:55'),
+(7, 'La Belle Paradise Garden Woman', 'La Belle Paradise Garden Woman', 10, 1, 1350000, NULL, '-', 'floral', 'pria', 22, 5, 'assets/images/products/labelle-removebg-preview.webp', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:20:08'),
+(8, 'Le Beau Man', 'Le Beau Man', 10, 1, 620000, NULL, '-', 'woody', 'pria', 28, 5, 'assets/images/products/lebeauman-removebg-preview.webp', 0.0, 0, 0, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-05-23 14:21:27'),
+(9, 'Aqua Di Gio', 'aqua-di-gio', 5, 1, 1050000, 920000, '-', 'woody', 'pria', 19, 5, 'assets/images/products/aqua-removebg-preview.webp', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:22:12'),
+(10, 'Vanilla Orchid', 'vanilla-orchid', 6, 3, 1800000, NULL, 'Vanilla Madagascar dipadukan anggrek eksotis. Manis, sensual, dan mewah.', 'oriental', 'wanita', 10, 5, 'assets/images/products/vanilla-removebg-preview.webp', 0.0, 0, 0, 'aktif', 1, 0, '2026-05-21 07:19:47', '2026-05-23 14:22:46'),
+(11, 'Christian Dior Sauvage Elixir Man', 'Christian Dior Sauvage Elixir Man', 3, 2, 890000, NULL, '-', 'woody', 'pria', 14, 5, 'assets/images/products/sauvage-removebg-preview.webp', 0.0, 0, 0, 'aktif', 0, 0, '2026-05-21 07:19:47', '2026-05-23 14:23:17'),
+(12, 'Calvin Klein CK One Essence', 'Calvin Klein CK One Essence', 11, 1, 550000, 480000, '-', 'fresh', 'unisex', 35, 5, 'assets/images/products/one_essence-removebg-preview.webp', 0.0, 0, 0, 'aktif', 0, 1, '2026-05-21 07:19:47', '2026-05-23 14:23:53');
 
 --
 -- Triggers `products`

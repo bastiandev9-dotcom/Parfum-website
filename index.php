@@ -107,7 +107,7 @@ if (empty($bestSellers)) {
                     </div>
                 </div>
                 <div class="category-card">
-                    <img src="assets/images/products/wanita.jpg">
+                    <img src="assets/images/products/wanita.webp">
                     <div class="category-overlay">
                         <h3>Parfum Wanita</h3>
                         <p>Aroma floral, sweet, dan elegan untuk wanita berkelas</p>
