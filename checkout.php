@@ -133,17 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             $stmtItem->execute();
         }
 
-        // Insert payment
-        $stmtPay = $conn->prepare("INSERT INTO payments (order_id, metode, jumlah, status) VALUES (?,?,?,?)");
-        $payStatus = ($selectedPayment === 'cod') ? 'pending' : 'pending';
-        $stmtPay->bind_param("isis", $orderId, $selectedPayment, $grandTotal, $payStatus);
-        $stmtPay->execute();
-
         // Kosongkan cart
         $_SESSION['cart'] = [];
-        $_SESSION['last_order_code'] = $orderCode;
 
-        header('Location: user/orders.php?order=' . $orderCode);
+        header('Location: order-success.php?order=' . $orderCode);
         exit;
     }
 }

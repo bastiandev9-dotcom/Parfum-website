@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
@@ -11,6 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+
 $user = ['nama' => $_SESSION['nama'] ?? 'User', 'avatar' => strtoupper(substr($_SESSION['nama'] ?? 'U', 0, 2)), 'member_since' => 'Mei 2026'];
 $orders = [];
 
@@ -24,6 +25,31 @@ while ($row = $result->fetch_assoc()) {
 
 $filterStatus = isset($_GET['status']) ? $_GET['status'] : 'all';
 $successOrder = $_GET['order'] ?? null;
+
+// Tracking by order code (search)
+$trackOrder = null;
+$trackLogs  = [];
+$trackError = '';
+$trackCode  = trim($_GET['track'] ?? $_POST['track_code'] ?? '');
+if ($trackCode) {
+    $stmt = $conn->prepare("SELECT * FROM orders WHERE order_code=? AND user_id=?");
+    $stmt->bind_param("si", $trackCode, $user_id);
+    $stmt->execute();
+    $trackOrder = $stmt->get_result()->fetch_assoc();
+    if ($trackOrder) {
+        $stmt2 = $conn->prepare("SELECT * FROM order_status_logs WHERE order_id=? ORDER BY changed_at ASC");
+        $stmt2->bind_param("i", $trackOrder['order_id']);
+        $stmt2->execute();
+        $trackLogs = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $trackError = 'Pesanan tidak ditemukan.';
+    }
+}
+$trackSteps  = ['pending','diproses','dikirim','selesai'];
+$trackLabels = ['pending'=>'Pesanan Diterima','diproses'=>'Sedang Diproses','dikirim'=>'Dalam Pengiriman','selesai'=>'Pesanan Selesai'];
+$trackIcons  = ['pending'=>'fas fa-clock','diproses'=>'fas fa-box','dikirim'=>'fas fa-shipping-fast','selesai'=>'fas fa-check-circle'];
+$trackStep   = $trackOrder ? array_search($trackOrder['status'], $trackSteps) : -1;
+
 if ($filterStatus !== 'all') {
     $orders = array_filter($orders, fn($o) => $o['status'] === $filterStatus);
     $orders = array_values($orders);
@@ -76,6 +102,7 @@ foreach ($orders as $o) {
                 <nav class="user-nav">
                     <a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a>
                     <a href="orders.php" class="active"><i class="fas fa-shopping-bag"></i> Pesanan Saya</a>
+                    <a href="wishlist.php"><i class="fas fa-heart"></i> Wishlist</a>
                     <a href="profile.php"><i class="fas fa-user"></i> Profil & Alamat</a>
                     <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Keluar</a>
                 </nav>
@@ -85,8 +112,10 @@ foreach ($orders as $o) {
             <div class="user-content">
                 
                 <div class="content-header">
-                    <h2>Riwayat Pesanan</h2>
-                    <p>Kelola dan lacak status pesanan Anda.</p>
+                    <div>
+                        <h2>Riwayat Pesanan</h2>
+                        <p>Kelola dan lacak status pesanan Anda.</p>
+                    </div>
                 </div>
                 
                 <?php if ($successOrder): ?>
@@ -102,6 +131,55 @@ foreach ($orders as $o) {
                         <?php echo $label; ?>
                     </a>
                     <?php endforeach; ?>
+                </div>
+
+                <!-- Lacak Pesanan -->
+                <div style="background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);margin-bottom:24px;">
+                    <h4 style="margin:0 0 12px;font-size:.95rem;"><i class="fas fa-search" style="color:var(--gold);margin-right:6px;"></i> Cari Pesanan</h4>
+                    <form method="GET" style="display:flex;gap:10px;">
+                        <?php if($filterStatus !== 'all'): ?><input type="hidden" name="status" value="<?php echo htmlspecialchars($filterStatus); ?>"><?php endif; ?>
+                        <input type="text" name="track" value="<?php echo htmlspecialchars($trackCode); ?>" placeholder="Masukkan kode pesanan, contoh: LMR-XXXXXXXX"
+                            style="flex:1;padding:10px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:.9rem;outline:none;">
+                        <button type="submit" class="btn" style="white-space:nowrap;"><i class="fas fa-search"></i> Cari</button>
+                    </form>
+
+                    <?php if ($trackCode): ?>
+                    <div style="margin-top:16px;">
+                    <?php if ($trackError): ?>
+                        <p style="color:#e74c3c;font-size:.9rem;"><i class="fas fa-exclamation-circle"></i> <?php echo $trackError; ?></p>
+                    <?php elseif ($trackOrder): ?>
+                        <div style="border-top:1px solid #eee;padding-top:16px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                                <div>
+                                    <strong style="color:var(--gold);"><?php echo $trackOrder['order_code']; ?></strong>
+                                    <p style="color:#888;font-size:.8rem;margin:2px 0 0;"><?php echo date('d F Y', strtotime($trackOrder['created_at'])); ?></p>
+                                </div>
+                                <span class="status-badge status-<?php echo $trackOrder['status']; ?>"><?php echo ucfirst($trackOrder['status']); ?></span>
+                            </div>
+                            <!-- Progress -->
+                            <div style="display:flex;justify-content:space-between;position:relative;margin-bottom:24px;">
+                                <div style="position:absolute;top:18px;left:0;right:0;height:4px;background:#eee;z-index:0;">
+                                    <div style="height:100%;background:var(--gold);width:<?php $pct=['pending'=>0,'diproses'=>33,'dikirim'=>66,'selesai'=>100]; echo $pct[$trackOrder['status']]??0; ?>%;"></div>
+                                </div>
+                                <?php foreach ($trackSteps as $i => $step): ?>
+                                <div style="text-align:center;z-index:1;width:25%;">
+                                    <div style="width:36px;height:36px;border-radius:50%;background:<?php echo $i<=$trackStep?'var(--gold)':'#eee'; ?>;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;color:<?php echo $i<=$trackStep?'#fff':'#aaa'; ?>;font-size:.85rem;">
+                                        <i class="<?php echo $trackIcons[$step]; ?>"></i>
+                                    </div>
+                                    <p style="font-size:.7rem;color:<?php echo $i<=$trackStep?'var(--black)':'#aaa'; ?>;font-weight:<?php echo $i<=$trackStep?'600':'400'; ?>;"><?php echo $trackLabels[$step]; ?></p>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php if ($trackOrder['resi']): ?>
+                            <div style="background:var(--cream);border-radius:8px;padding:10px 16px;display:flex;justify-content:space-between;">
+                                <span style="font-size:.85rem;color:#888;">No. Resi</span>
+                                <strong style="color:var(--gold);"><?php echo $trackOrder['resi']; ?> <span style="font-weight:400;color:#888;font-size:.8rem;">(<?php echo strtoupper($trackOrder['kurir']); ?>)</span></strong>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 
                 <!-- Orders List -->
@@ -318,6 +396,8 @@ function submitReview(orderId, productId) {
         .catch(() => alert('Gagal mengirim ulasan.'));
 }
 </script>
+
+
 
 </body>
 </html>

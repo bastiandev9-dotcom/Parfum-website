@@ -159,6 +159,7 @@ $currentStep = $statusSteps[$order['status']] ?? 0;
         <nav class="user-nav">
             <a href="dashboard.php"><i class="fas fa-th-large"></i> Dashboard</a>
             <a href="orders.php" class="active"><i class="fas fa-shopping-bag"></i> Pesanan Saya</a>
+            <a href="wishlist.php"><i class="fas fa-heart"></i> Wishlist</a>
             <a href="profile.php"><i class="fas fa-user"></i> Profil & Alamat</a>
             <a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Keluar</a>
         </nav>
@@ -199,10 +200,10 @@ $currentStep = $statusSteps[$order['status']] ?? 0;
             <div class="steps-row">
                 <?php
                 $steps = [
-                    ['icon'=>'fa-file-alt',      'label'=>'Pesanan\nDibuat'],
-                    ['icon'=>'fa-box',            'label'=>'Sedang\nDiproses'],
-                    ['icon'=>'fa-shipping-fast',  'label'=>'Dalam\nPengiriman'],
-                    ['icon'=>'fa-check-circle',   'label'=>'Pesanan\nSelesai'],
+                    ['icon'=>'fa-file-alt',      'label'=>'Pesanan Dibuat'],
+                    ['icon'=>'fa-box',            'label'=>'Sedang Diproses'],
+                    ['icon'=>'fa-shipping-fast',  'label'=>'Dalam Pengiriman'],
+                    ['icon'=>'fa-check-circle',   'label'=>'Pesanan Selesai'],
                 ];
                 foreach ($steps as $i => $s):
                     $cls = $i < $currentStep ? 'done' : ($i === $currentStep ? 'active' : '');

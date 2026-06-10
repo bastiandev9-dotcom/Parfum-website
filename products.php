@@ -11,6 +11,8 @@ $filterBrand   = isset($_GET['brand'])  ? (array)$_GET['brand']  : [];
 $filterAroma   = isset($_GET['aroma'])  ? (array)$_GET['aroma']  : [];
 $filterUkuran  = isset($_GET['ukuran']) ? (array)$_GET['ukuran'] : [];
 $filterKategori = $_GET['kategori'] ?? '';
+$filterGender  = isset($_GET['gender']) ? (array)$_GET['gender'] : [];
+$search        = trim($_GET['q'] ?? '');
 
 // ==================== BUILD QUERY DARI DATABASE ====================
 $where  = ["p.status = 'aktif'"];
@@ -21,6 +23,20 @@ if ($filterKategori) {
     $where[]  = "p.gender = ?";
     $params[] = $filterKategori;
     $types   .= 's';
+}
+
+if (!empty($filterGender)) {
+    $placeholders = implode(',', array_fill(0, count($filterGender), '?'));
+    $where[]  = "p.gender IN ($placeholders)";
+    $params   = array_merge($params, $filterGender);
+    $types   .= str_repeat('s', count($filterGender));
+}
+
+if ($search) {
+    $where[]  = "(p.nama_produk LIKE ? OR b.nama_brand LIKE ?)";
+    $params[] = "%$search%";
+    $params[] = "%$search%";
+    $types   .= 'ss';
 }
 
 if (!empty($filterHarga)) {
@@ -129,6 +145,22 @@ $allAromas = array_column($allAromas, 'aroma');
                     <?php if($filterKategori): ?>
                         <input type="hidden" name="kategori" value="<?php echo $filterKategori; ?>">
                     <?php endif; ?>
+                    <?php if($search): ?>
+                        <input type="hidden" name="q" value="<?php echo htmlspecialchars($search); ?>">
+                    <?php endif; ?>
+                    
+                    <!-- Filter Gender -->
+                    <div class="filter-group">
+                        <h4 class="filter-title">Gender</h4>
+                        <div class="filter-options">
+                            <?php foreach (['pria' => 'Pria', 'wanita' => 'Wanita', 'unisex' => 'Unisex'] as $val => $label): ?>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="gender[]" value="<?php echo $val; ?>" <?php echo in_array($val, $filterGender) ? 'checked' : ''; ?>>
+                                <span><?php echo $label; ?></span>
+                            </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                     
                     <!-- Filter Harga -->
                     <div class="filter-group">
@@ -197,7 +229,17 @@ $allAromas = array_column($allAromas, 'aroma');
                 
                 <!-- Toolbar -->
                 <div class="shop-toolbar">
-                    <p class="result-count">Menampilkan <strong><?php echo $totalProduk; ?></strong> produk</p>
+                    <form method="GET" action="products.php" style="display:flex;gap:8px;flex:1;max-width:400px;">
+                        <?php foreach ($_GET as $k => $v): if ($k === 'q') continue; ?>
+                            <?php if (is_array($v)): foreach ($v as $vi): ?>
+                                <input type="hidden" name="<?php echo htmlspecialchars($k); ?>[]" value="<?php echo htmlspecialchars($vi); ?>">
+                            <?php endforeach; else: ?>
+                                <input type="hidden" name="<?php echo htmlspecialchars($k); ?>" value="<?php echo htmlspecialchars($v); ?>">
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <input type="text" name="q" value="<?php echo htmlspecialchars($search); ?>" placeholder="Cari produk atau brand..." style="flex:1;padding:10px 16px;border:1.5px solid #ddd;border-radius:10px;font-size:.9rem;outline:none;">
+                        <button type="submit" style="padding:10px 16px;background:var(--gold);color:#fff;border:none;border-radius:10px;cursor:pointer;"><i class="fas fa-search"></i></button>
+                    </form>
                     
                     <div class="sort-box">
                         <label for="sort">Urutkan:</label>

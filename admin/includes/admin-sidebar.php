@@ -8,20 +8,26 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
 
     <nav class="admin-nav">
-        <a href="dashboard.php" class="<?php echo $currentPage == 'dashboard.php' ? 'active' : ''; ?>">
+        <a href="dashboard.php" class="<?php echo $currentPage === 'dashboard.php' ? 'active' : ''; ?>">
             <i class="fas fa-chart-line"></i> Dashboard
         </a>
-        <a href="products.php" class="<?php echo $currentPage == 'products.php' ? 'active' : ''; ?>">
+        <a href="products.php" class="<?php echo in_array($currentPage, ['products.php','product-add.php','product-edit.php']) ? 'active' : ''; ?>">
             <i class="fas fa-box-open"></i> Kelola Produk
         </a>
-        <a href="orders.php" class="<?php echo $currentPage == 'orders.php' ? 'active' : ''; ?>">
+        <a href="categories.php" class="<?php echo $currentPage === 'categories.php' ? 'active' : ''; ?>">
+            <i class="fas fa-tags"></i> Kategori
+        </a>
+        <a href="orders.php" class="<?php echo in_array($currentPage, ['orders.php','order-detail.php']) ? 'active' : ''; ?>">
             <i class="fas fa-shopping-cart"></i> Kelola Pesanan
         </a>
-        <a href="users.php" class="<?php echo $currentPage == 'users.php' ? 'active' : ''; ?>">
+        <a href="users.php" class="<?php echo $currentPage === 'users.php' ? 'active' : ''; ?>">
             <i class="fas fa-users"></i> Kelola User
         </a>
-        <a href="upload_gambar.php" class="<?php echo $currentPage == 'upload_gambar.php' ? 'active' : ''; ?>">
-            <i class="fas fa-images"></i> Upload Gambar
+        <a href="reports.php" class="<?php echo $currentPage === 'reports.php' ? 'active' : ''; ?>">
+            <i class="fas fa-chart-bar"></i> Laporan
+        </a>
+        <a href="settings.php" class="<?php echo $currentPage === 'settings.php' ? 'active' : ''; ?>">
+            <i class="fas fa-cog"></i> Pengaturan
         </a>
     </nav>
 

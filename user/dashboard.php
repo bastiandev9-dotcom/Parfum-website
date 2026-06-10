@@ -91,6 +91,9 @@ $totalOrders = $statusCount['pending'] + $statusCount['diproses'] + $statusCount
                     <a href="profile.php">
                         <i class="fas fa-user"></i> Profil & Alamat
                     </a>
+                    <a href="wishlist.php">
+                        <i class="fas fa-heart"></i> Wishlist
+                    </a>
                     <a href="../logout.php">
                         <i class="fas fa-sign-out-alt"></i> Keluar
                     </a>

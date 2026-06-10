@@ -7,12 +7,13 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="container">
         <a href="index.php" class="logo">LUMIÈRE</a>
         
+        <?php $base = (strpos($_SERVER['PHP_SELF'], '/user/') !== false || strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? '../' : ''; ?>
         <ul class="nav-menu">
-            <li><a href="index.php">Beranda</a></li>
-            <li><a href="products.php">Katalog</a></li>
-            <li><a href="products.php?kategori=pria">Pria</a></li>
-            <li><a href="products.php?kategori=wanita">Wanita</a></li>
-            <li><a href="products.php?kategori=unisex">Unisex</a></li>
+            <li><a href="<?php echo $base; ?>index.php">Beranda</a></li>
+            <li><a href="<?php echo $base; ?>products.php">Katalog</a></li>
+            <li><a href="<?php echo $base; ?>faq.php">FAQ</a></li>
+            <li><a href="<?php echo $base; ?>contact.php">Kontak</a></li>
+            <li><a href="<?php echo $base; ?>about.php">Tentang</a></li>
         </ul>
         
         <div class="nav-icons">

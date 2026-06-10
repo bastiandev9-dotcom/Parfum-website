@@ -103,12 +103,11 @@ while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
 
-$conn->close();
+// conn dibiarkan terbuka untuk query export PDF di bawah
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 if ($editProduct) $action = 'edit';
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -124,7 +123,10 @@ if ($editProduct) $action = 'edit';
 <main class="admin-main">
     <div class="admin-header">
         <h1>Kelola Produk</h1>
-        <a href="?action=add" class="btn btn-admin-add"><i class="fas fa-plus"></i> Tambah Produk</a>
+        <div style="display:flex;gap:8px;">
+            <button onclick="exportPDF()" class="btn btn-outline" style="border-color:#C9A962;color:#C9A962;background:#fff;cursor:pointer;"><i class="fas fa-file-pdf"></i> Export PDF</button>
+            <a href="?action=add" class="btn btn-admin-add"><i class="fas fa-plus"></i> Tambah Produk</a>
+        </div>
     </div>
 
     <?php if ($message): ?>
@@ -264,6 +266,27 @@ function searchTable() {
     }
 }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+window.exportPDFConfig = {
+    orientation: 'landscape',
+    subtitle: 'Daftar Produk — Dicetak: <?php echo date("d/m/Y H:i"); ?>',
+    filename: 'produk-lumiere.pdf',
+    head: ['#','Nama Produk','Brand','Harga','Harga Diskon','Stok','Aroma','Gender','Status'],
+    body: (<?php
+        $res2 = $conn->query("SELECT p.nama_produk, b.nama_brand, p.harga, p.harga_diskon, p.stok, p.aroma, p.gender, p.status FROM products p LEFT JOIN brands b ON p.brand_id=b.brand_id ORDER BY p.nama_produk");
+        echo json_encode($res2->fetch_all(MYSQLI_ASSOC));
+    ?>).map((p, i) => [
+        i + 1, p.nama_produk, p.nama_brand || '-',
+        'Rp ' + parseInt(p.harga).toLocaleString('id-ID'),
+        p.harga_diskon ? 'Rp ' + parseInt(p.harga_diskon).toLocaleString('id-ID') : '-',
+        p.stok, p.aroma, p.gender, p.status
+    ])
+};
+</script>
+<script src="../assets/js/export-pdf.js"></script>
 
 </body>
 </html>
