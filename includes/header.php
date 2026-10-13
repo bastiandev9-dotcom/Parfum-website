@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <header class="site-header">
     <div class="container">
-        <a href="index.php" class="logo">LUMIÈRE</a>
+        <a href="index.php" class="logo"><span>🌹</span><span class="logo-text">Lumière</span></a>
         
         <?php $base = (strpos($_SERVER['PHP_SELF'], '/user/') !== false || strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? '../' : ''; ?>
         <ul class="nav-menu">
