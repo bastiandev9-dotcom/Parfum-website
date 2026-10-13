@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
 :root {
-  --gold: #C9A962;
-  --gold-light: #E5D5A8;
-  --black: #1A1A1A;
-  --dark: #2D2D2D;
+  --gold: #B76E79;
+  --gold-light: #E8B4B8;
+  --black: #2E1A22;
+  --dark: #4A2C35;
   --cream: #FAF7F2;
   --white: #FFFFFF;
   --gray: #888888;
@@ -16,10 +18,14 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Jost', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--cream);
   color: var(--black);
   line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
 }
 
 a {
@@ -61,6 +67,21 @@ img {
   font-weight: 700;
   color: var(--gold);
   letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.logo span {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.logo-text {
+  font-style: italic;
+  letter-spacing: 4px;
+  font-weight: 500;
 }
 
 .nav-menu {
